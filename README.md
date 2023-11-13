@@ -1,4 +1,4 @@
-# pokedex
+# pokedex-norven
 
 ## Project setup
 ```

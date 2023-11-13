@@ -1,14 +1,31 @@
 <template>
   <div id="app">
-    <nav>
-      <h1></h1>
-    </nav>
+    <Header />
     <router-view />
   </div>
 </template>
 
 <script>
-export default {};
+import Header from './components/Header.vue';
+
+export default {
+  data() {
+    return {};
+  },
+  components: {
+    Header
+  }
+};
 </script>
 
-<style scoped></style>
+<style lang="scss">
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #fafafa;
+}
+</style>
