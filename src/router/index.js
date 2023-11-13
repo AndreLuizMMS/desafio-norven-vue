@@ -1,9 +1,15 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+import Favorites from '../views/Favorites.vue';
+import Home from '../views/Home.vue';
+
 Vue.use(VueRouter);
 
-const routes = [];
+const routes = [
+  { path: '/', component: Home },
+  { path: '/favoritos', component: Favorites }
+];
 
 const router = new VueRouter({
   mode: 'history',
