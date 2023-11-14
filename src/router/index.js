@@ -1,14 +1,16 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import Favorites from '../views/Favorites.vue';
 import Home from '../views/Home.vue';
+import Favorites from '../views/Favorites.vue';
+import PokemonAbout from '../views/PokemonAbout.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
-  { path: '/', component: Home },
-  { path: '/favoritos', component: Favorites }
+  { path: '/', component: Home, name:'Home-page' },
+  { path: '/favoritos', component: Favorites, name:'Favoritos-page' },
+  { path: '/pokemon/:id', component: PokemonAbout, name:'Pokemon-about' },
 ];
 
 const router = new VueRouter({
