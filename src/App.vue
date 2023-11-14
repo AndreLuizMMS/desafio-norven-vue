@@ -9,11 +9,11 @@
 import Header from './components/Header.vue';
 
 export default {
-  data() {
-    return {};
-  },
   components: {
     Header
+  },
+  data() {
+    return {};
   }
 };
 </script>

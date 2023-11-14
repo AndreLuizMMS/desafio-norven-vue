@@ -1,20 +1,29 @@
 <template>
-  <div class="card-wrap">
-    <img :src="pokemonData.sprites.front_default" alt="" class="pokemon-img" />
-    <div class="info">
-      <div>
-        <p class="id">N° {{ pokemonData.id }}</p>
-        <p class="name">{{ capitalize(pokemon.name) }}</p>
+  <transition name="fade">
+    <router-link :to="`/pokemon/${pokemonData.id}`" class="router-link">
+      <div class="card-wrap">
+        <img
+          :src="pokemonData.sprites.other.dream_world.front_default"
+          alt=""
+          class="pokemon-img"
+        />
+        <div class="info">
+          <div>
+            <p class="id">N° {{ pokemonData.id }}</p>
+            <p class="name">{{ capitalize(pokemon.name) }}</p>
+          </div>
+          <div class="type">
+            <Types :types="pokemonData.types" />
+          </div>
+        </div>
       </div>
-      <div class="type">
-        <Types :types="pokemonData.types" />
-      </div>
-    </div>
-  </div>
+    </router-link>
+  </transition>
 </template>
 
 <script>
 import instance from '@/requests/axios';
+
 import Types from './Types.vue';
 
 export default {
@@ -49,10 +58,19 @@ export default {
   background: white;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
   border-radius: 8px;
+  transition: 0.2s;
+
+  &:hover {
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 1);
+    transform: scale(1.025);
+  }
 }
 
 .pokemon-img {
-  width: 10rem;
+  width: 12rem;
+  height: 12rem;
+  object-fit: fill;
+  border-radius: 8px 0 0 8px; // Optional: Add border-radius to match the container's rounded corners
 }
 
 .info {
@@ -69,5 +87,19 @@ export default {
     font-size: 2rem;
     font-weight: bold;
   }
+}
+
+.router-link {
+  text-decoration: none;
+  color: black;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
