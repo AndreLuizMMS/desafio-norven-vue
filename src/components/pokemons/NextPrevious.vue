@@ -3,13 +3,11 @@
     <a v-if="pokemonId > 1" :href="`/pokemon/${prevPokemon.id}`" class="pokemon-link">
       <button class="pokemon-btn">
         Anterior <span class="pokemon-number">N°{{ prevPokemon.id }}</span>
-        {{ capitalize(prevPokemon.name) }}
       </button>
     </a>
     <a :href="`/pokemon/${nextPokemon.id}`" class="pokemon-link">
       <button class="pokemon-btn">
         Próximo <span class="pokemon-number">N°{{ nextPokemon.id }}</span>
-        {{ capitalize(nextPokemon.name) }}
       </button>
     </a>
   </div>

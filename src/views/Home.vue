@@ -1,67 +1,97 @@
 <template>
   <div class="home-wrapper">
-    <div class="header">
-      <label for="query">Nome ou Número</label>
-      <input type="text" name="query" placeholder="Pesquisar" />
-      <div class="buttons">
-        <button>Buscar</button>
-        <button>Limpar</button>
-        <button @mouseenter="hoverButton(true)" @mouseleave="hoverButton(false)">
-          Aleatório
-          <img :src="shuffleImageSrc" class="shuffle-img" />
-        </button>
+    <form class="input-box" @submit.prevent="queryPokemons()">
+      <div class="header">
+        <label for="query">Nome ou Número</label>
+        <Autocomplete
+          :items="pokemonNames"
+          @autocomplete-selected="handleAutocompleteSelection"
+        />
+        <div class="buttons">
+          <button type="submit">Buscar</button>
+        </div>
       </div>
-    </div>
-    <PokemonList :pokemons="pokemons" />
+    </form>
+    <PokemonList :pokemons="pokemons" v-if="pokemons.length > 0" />
     <footer>
-      <button class="load-more-btn" @click="pageIncerment()">Carregar mais</button>
+      <button v-if="pokemons.length > 1" class="load-more-btn" @click="pageIncerment()">
+        Carregar mais
+      </button>
+      <button v-else class="load-more-btn" @click="pageIncerment()">Limpar</button>
     </footer>
   </div>
 </template>
 
 <script>
+import Autocomplete from '../components/Autocomplete.vue';
 import PokemonList from '../components/pokemons/PokemonList.vue';
+
+import { names } from '@/data/pokemonNames';
+import { fetchPokemons, querySearchPokemons } from '@/requests/pokemonRequests';
 
 export default {
   components: {
+    Autocomplete,
     PokemonList
   },
   data() {
     return {
+      pages: 2,
+      search: '',
+      pokemons: [],
       isHovered: true,
-      page: 2
+      pokemonNames: names()
     };
   },
   methods: {
-    async hoverButton(isHovered) {
-      this.isHovered = isHovered;
+    async queryPokemons() {
+      if (this.search.length > 1) {
+        this.pokemons = [
+          {
+            name: this.search,
+            url: `https://pokeapi.co/api/v2/pokemon/${this.search}`
+          }
+        ];
+      }
     },
     async fetchPokemons() {
-      this.$store.dispatch('fetchPokemons', this.page);
+      const data = await fetchPokemons(this.pages);
+      this.pokemons = data;
+    },
+    hoverButton(isHovered) {
+      this.isHovered = isHovered;
     },
     pageIncerment() {
-      this.page++;
+      this.pages++;
       this.fetchPokemons();
-      console.log(this.page);
-    }
-  },
-  computed: {
-    shuffleImageSrc() {
-      return this.isHovered
-        ? require('../assets/black-shuffle.png')
-        : require('../assets/white-shuffle.png');
     },
-    pokemons() {
-      return this.$store.getters.getPokemons;
+    clearQuery() {
+      this.search = '';
+    },
+    handleAutocompleteSelection(selectedResult) {
+      this.search = selectedResult;
     }
   },
   async mounted() {
     this.fetchPokemons();
+    console.log(names());
   }
 };
 </script>
 
 <style lang="scss">
+.input-box {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  button {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+}
+
 .home-wrapper {
   display: flex;
   flex-direction: column;
@@ -70,6 +100,7 @@ export default {
 }
 
 .header {
+  width: 20rem;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -86,7 +117,6 @@ export default {
     border-radius: 5px;
     padding: 0.8rem 2rem;
     width: 90%;
-    margin-top: 1rem;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
     outline: none;
   }
@@ -99,7 +129,6 @@ export default {
     button {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
       padding: 0.5rem;
 
       background: rgba(0, 108, 221, 0.93);

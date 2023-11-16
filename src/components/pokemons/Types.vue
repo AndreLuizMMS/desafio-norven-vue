@@ -26,7 +26,8 @@ export default {
         ice: 'ice',
         ghost: 'ghost',
         rock: 'rock',
-        grass: 'grass'
+        grass: 'grass',
+        fairy: 'fairy'
       };
 
       return typeClassMap[typeName] || '';
@@ -48,6 +49,9 @@ export default {
 
 .grass {
   background: rgb(155, 204, 80);
+}
+.fairy {
+  background: rgb(253, 185, 233);
 }
 .fire {
   background: rgb(253, 125, 36);
