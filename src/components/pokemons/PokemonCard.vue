@@ -1,10 +1,16 @@
 <template>
   <transition name="fade">
-    <router-link :to="`/pokemon/${pokemonData.id}`" class="router-link">
+    <router-link
+      :to="`/pokemon/${pokemonData.id}`"
+      class="router-link"
+      v-if="pokemonData"
+    >
       <div class="card-wrap">
         <img
-          :src="pokemonData.sprites.other.dream_world.front_default"
-          alt=""
+          :src="
+            pokemonData.sprites.other.dream_world.front_default ??
+            pokemonData.sprites.front_default
+          "
           class="pokemon-img"
         />
         <div class="info">
@@ -40,11 +46,19 @@ export default {
     capitalize(string) {
       if (typeof string !== 'string') return '';
       return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+    async fetchData() {
+      const response = await instance.get(`${this.pokemon.url}`);
+      this.pokemonData = response.data;
+    }
+  },
+  watch: {
+    async pokemon() {
+      this.fetchData();
     }
   },
   async mounted() {
-    const response = await instance.get(`${this.pokemon.url}`);
-    this.pokemonData = response.data;
+    this.fetchData();
   }
 };
 </script>
@@ -53,6 +67,7 @@ export default {
 .card-wrap {
   display: flex;
   align-items: center;
+  justify-content: space-around;
   padding-block: 0.5rem;
 
   background: white;

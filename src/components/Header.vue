@@ -28,6 +28,7 @@ $red: rgb(211, 43, 43);
 
   .logo {
     width: 10rem;
+    cursor: pointer;
   }
 
   button {

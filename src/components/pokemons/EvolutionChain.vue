@@ -1,5 +1,5 @@
 <template>
-  <div class="evolution-chain-wrap">
+  <div class="evolution-chain-wrap" v-if="pokemonEvolution.length > 1">
     <header>
       <span class="header-title">Evoluções</span>
     </header>
@@ -11,6 +11,9 @@
         :pokemonName="evolution.name"
       />
     </div>
+  </div>
+  <div class="evolution-chain-wrap" v-else>
+    <span class="no-evolution">Nenhuma Evolução</span>
   </div>
 </template>
 
@@ -49,13 +52,17 @@ export default {
 </script>
 
 <style lang="scss">
+.no-evolution {
+  font-size: 1.2rem;
+}
+
 .header-title {
   font-size: 2rem;
 }
 
 .evolution-chain-wrap {
   background: #fefefe;
-  box-shadow: 1px 1px 5px black;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
   border-radius: 5px;
   width: 100%;
   padding: 1rem;
