@@ -38,11 +38,19 @@ export default {
     capitalize(string) {
       if (typeof string !== 'string') return '';
       return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+    async fecthData() {
+      const data = await getPokemonByName(this.pokemonName);
+      this.pokemon = data;
+    }
+  },
+  watch: {
+    pokemonName() {
+      this.fecthData();
     }
   },
   async mounted() {
-    const data = await getPokemonByName(this.pokemonName);
-    this.pokemon = data;
+    this.fecthData();
   }
 };
 </script>

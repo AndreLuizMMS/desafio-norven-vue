@@ -32,21 +32,31 @@ export default {
       pokemonEvolution: []
     };
   },
+  methods: {
+    async setEvolutionChain() {
+      const data = await getEvolutionChainByName(this.pokemonName);
+      var evoChain = [];
+      var evoData = data.chain;
+
+      do {
+        var evoDetails = evoData['evolution_details'][0];
+        evoChain.push({
+          name: evoData.species.name,
+          min_level: !evoDetails ? 1 : evoDetails.min_level
+        });
+        evoData = evoData['evolves_to'][0];
+      } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
+
+      this.pokemonEvolution = evoChain;
+    }
+  },
+  watch: {
+    async pokemonName() {
+      await this.setEvolutionChain();
+    }
+  },
   async mounted() {
-    const data = await getEvolutionChainByName(this.pokemonName);
-    var evoChain = [];
-    var evoData = data.chain;
-
-    do {
-      var evoDetails = evoData['evolution_details'][0];
-      evoChain.push({
-        name: evoData.species.name,
-        min_level: !evoDetails ? 1 : evoDetails.min_level
-      });
-      evoData = evoData['evolves_to'][0];
-    } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
-
-    this.pokemonEvolution = evoChain;
+    await this.setEvolutionChain();
   }
 };
 </script>

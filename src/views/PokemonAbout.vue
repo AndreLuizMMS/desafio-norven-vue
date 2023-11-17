@@ -9,11 +9,20 @@
         <div class="title">
           <span class="name">{{ capitalize(currentPokemon.name) }}</span>
           <span class="num">N° {{ currentPokemon.id }}</span>
+
+          <div class="favorite">
+            <button class="add" @click="addToFavorite()" v-if="!isFavorite">
+              Add to Favorites
+            </button>
+            <button class="remove" @click="removeFavorite()" v-else>
+              Remove from Favorites
+            </button>
+          </div>
         </div>
 
         <div class="pokemon-info-wrapper">
           <div class="info-sec">
-            <div class="img-wra">
+            <div>
               <img
                 :src="
                   currentPokemon.sprites.other.dream_world.front_default ??
@@ -32,7 +41,6 @@
               />
             </div>
           </div>
-
           <div class="info-sec">
             <EvolutionChain :pokemonName="currentPokemon.name" />
           </div>
@@ -70,11 +78,32 @@ export default {
     capitalize(string) {
       if (typeof string !== 'string') return '';
       return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+    addToFavorite() {
+      this.$store.commit('addToFavorite', {
+        name: this.currentPokemon.name,
+        id: this.currentPokemon.id
+      });
+    },
+    removeFavorite() {
+      this.$store.commit('removeFavorite', {
+        name: this.currentPokemon.name,
+        id: this.currentPokemon.id
+      });
     }
   },
   computed: {
     pokemonId() {
       return this.$route.params.id;
+    },
+    isFavorite() {
+      const favorites = this.$store.getters.getFavoritePokemons;
+      return favorites.some(pokemon => this.currentPokemon.id === pokemon.id);
+    }
+  },
+  watch: {
+    async $route() {
+      this.currentPokemon = await getPokemonById(this.pokemonId);
     }
   },
   async mounted() {
@@ -84,6 +113,47 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.favorite {
+  .add {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+
+    background: rgba(0, 108, 221, 0.93);
+    border: 1px solid transparent;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+      background: white;
+      border: 1px solid rgba(0, 108, 221, 0.93);
+      color: black;
+    }
+  }
+  .remove {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+
+    background: #dc2626;
+    border: 1px solid transparent;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+      background: white;
+      border: 1px solid #dc2626;
+      color: black;
+    }
+  }
+}
+
 .not-found-wrapper {
   display: flex;
   flex-direction: column;
