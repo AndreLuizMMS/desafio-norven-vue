@@ -29,6 +29,7 @@ import Autocomplete from '../components/Autocomplete.vue';
 import PokemonList from '../components/pokemons/PokemonList.vue';
 
 import { names } from '@/data/pokemonNames';
+import json from '@/data/pokemonNames.json';
 import { fetchPokemons } from '@/requests/pokemonRequests';
 
 export default {
@@ -42,7 +43,7 @@ export default {
       search: '',
       pokemons: [],
       isHovered: true,
-      pokemonNames: names()
+      pokemonNames: json.names
     };
   },
   methods: {
@@ -71,6 +72,7 @@ export default {
       this.search = '';
     },
     handleAutocompleteSelection(selectedResult) {
+      console.log(selectedResult, 'from handleAutocompleteSelection');
       this.search = selectedResult;
     }
   },
