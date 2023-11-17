@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <router-link :to="`/pokemon/${pokemon.id}`" class="router-link">
+    <a :href="`/pokemon/${pokemon.id}`" class="router-link">
       <div class="card-wrap-chain">
         <img
           :src="
@@ -20,7 +20,7 @@
           </div>
         </div>
       </div>
-    </router-link>
+    </a>
   </transition>
 </template>
 

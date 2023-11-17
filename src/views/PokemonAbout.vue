@@ -2,7 +2,6 @@
   <div>
     <div class="about-wrapper" v-if="currentPokemon">
       <header>
-        <router-link to="/" tag="a" class="back-to-home">Início</router-link>
         <NextPrevious :pokemonId="pokemonId" />
       </header>
 
@@ -114,18 +113,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-header {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 1.5rem;
-}
-
-.back-to-home {
-  font-size: 1.2rem;
-  color: rgb(0, 55, 114);
-}
-
 .favorite {
   .add {
     display: flex;
