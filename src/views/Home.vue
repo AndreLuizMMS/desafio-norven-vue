@@ -28,7 +28,6 @@
 import Autocomplete from '../components/Autocomplete.vue';
 import PokemonList from '../components/pokemons/PokemonList.vue';
 
-import { names } from '@/data/pokemonNames';
 import json from '@/data/pokemonNames.json';
 import { fetchPokemons } from '@/requests/pokemonRequests';
 
@@ -39,7 +38,7 @@ export default {
   },
   data() {
     return {
-      pages: 2,
+      pages: 3,
       search: '',
       pokemons: [],
       isHovered: true,
@@ -65,7 +64,7 @@ export default {
       this.isHovered = isHovered;
     },
     pageIncerment() {
-      this.pages++;
+      this.pages += 3;
       this.fetchPokemons();
     },
     clearQuery() {
