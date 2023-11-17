@@ -36,13 +36,3 @@ export const getEvolutionChainByName = async name => {
     console.log(error);
   }
 };
-
-export const querySearchPokemons = async query => {
-  try {
-    const { data } = await instance.get(`pokemon/${query}`);
-    console.log(data);
-    // return data;
-  } catch (error) {
-    console.log(error);
-  }
-};

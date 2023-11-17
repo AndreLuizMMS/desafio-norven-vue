@@ -71,13 +71,11 @@ export default {
       this.search = '';
     },
     handleAutocompleteSelection(selectedResult) {
-      console.log(selectedResult, 'from handleAutocompleteSelection');
       this.search = selectedResult;
     }
   },
   async mounted() {
     this.fetchPokemons();
-    console.log(names());
   }
 };
 </script>

@@ -27,11 +27,6 @@ export default {
     favorites() {
       return this.$store.getters.getFavoritePokemons;
     }
-  },
-  mounted() {
-    const pokemonToCheck = { id: 1, name: 'Pikachu' };
-    const isFavorite = this.checkIfFavorite(pokemonToCheck);
-    console.log(`${pokemonToCheck.name} is in favorites: ${isFavorite}`);
   }
 };
 </script>

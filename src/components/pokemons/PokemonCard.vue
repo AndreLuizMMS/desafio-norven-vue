@@ -181,7 +181,7 @@ export default {
   width: 12rem;
   height: 12rem;
   object-fit: fill;
-  border-radius: 8px 0 0 8px; // Optional: Add border-radius to match the container's rounded corners
+  border-radius: 8px;
 }
 
 .info {
