@@ -2,7 +2,7 @@
   <div class="home-wrapper">
     <form class="input-box" @submit.prevent="queryPokemons()">
       <div class="header">
-        <label for="query">Nome ou Número</label>
+        <label for="query">Pesquisar por nome</label>
         <Autocomplete
           :items="pokemonNames"
           @autocomplete-selected="handleAutocompleteSelection"
@@ -12,7 +12,9 @@
         </div>
       </div>
     </form>
+
     <PokemonList :pokemons="pokemons" v-if="pokemons.length > 0" />
+
     <footer>
       <button v-if="pokemons.length > 1" class="load-more-btn" @click="pageIncerment()">
         Carregar mais
@@ -27,7 +29,7 @@ import Autocomplete from '../components/Autocomplete.vue';
 import PokemonList from '../components/pokemons/PokemonList.vue';
 
 import { names } from '@/data/pokemonNames';
-import { fetchPokemons, querySearchPokemons } from '@/requests/pokemonRequests';
+import { fetchPokemons } from '@/requests/pokemonRequests';
 
 export default {
   components: {
@@ -107,7 +109,6 @@ export default {
   gap: 0.5rem;
 
   label {
-    font-weight: bold;
     font-size: 1.5rem;
   }
 

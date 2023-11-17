@@ -1,15 +1,20 @@
 <template>
   <div class="next-prev-wrapper">
-    <a v-if="pokemonId > 1" :href="`/pokemon/${prevPokemon.id}`" class="pokemon-link">
+    <router-link
+      v-if="pokemonId > 1"
+      :to="`/pokemon/${prevPokemon.id}`"
+      class="pokemon-link"
+    >
       <button class="pokemon-btn">
         Anterior <span class="pokemon-number">N°{{ prevPokemon.id }}</span>
       </button>
-    </a>
-    <a :href="`/pokemon/${nextPokemon.id}`" class="pokemon-link">
+    </router-link>
+
+    <router-link :to="`/pokemon/${nextPokemon.id}`" class="pokemon-link">
       <button class="pokemon-btn">
         Próximo <span class="pokemon-number">N°{{ nextPokemon.id }}</span>
       </button>
-    </a>
+    </router-link>
   </div>
 </template>
 
@@ -38,9 +43,15 @@ export default {
       return string.charAt(0).toUpperCase() + string.slice(1);
     }
   },
+  watch: {
+    async pokemonId() {
+      await this.setPrevPokemon();
+      await this.setNextPokemon();
+    }
+  },
   async mounted() {
-    this.setPrevPokemon();
-    this.setNextPokemon();
+    await this.setPrevPokemon();
+    await this.setNextPokemon();
   }
 };
 </script>

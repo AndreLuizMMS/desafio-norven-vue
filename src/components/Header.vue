@@ -4,7 +4,7 @@
       <router-link to="/" tag="div">
         <img src="../assets/pokedexLogo.png" alt="" class="logo" />
       </router-link>
-      <router-link to="/favorites" tag="button">
+      <router-link to="/favoritos" tag="button">
         Meus favoritos
         <img src="../assets/white-star.png" alt="" />
       </router-link>
