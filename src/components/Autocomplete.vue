@@ -38,11 +38,6 @@ export default {
       type: Array,
       required: false,
       default: () => []
-    },
-    isAsync: {
-      type: Boolean,
-      required: false,
-      default: false
     }
   },
   data() {
@@ -67,29 +62,33 @@ export default {
     setResult(result) {
       this.search = result;
       this.isOpen = false;
-      this.arrowCounter = -1;
-
       this.$emit('autocomplete-selected', result);
     },
     onArrowDown(evt) {
       if (this.arrowCounter < this.results.length) {
-        this.arrowCounter = this.arrowCounter + 1;
+        this.arrowCounter++;
       }
     },
     onArrowUp() {
       if (this.arrowCounter > 0) {
-        this.arrowCounter = this.arrowCounter - 1;
+        this.arrowCounter--;
       }
     },
     onEnter() {
-      this.search = this.results[this.arrowCounter];
-      this.isOpen = false;
-      this.arrowCounter = -1;
+      this.$nextTick(() => {
+        if (this.results[this.arrowCounter] !== undefined) {
+          this.search = this.results[this.arrowCounter];
+          this.isOpen = false;
+          this.setResult(this.search);
+        } else {
+          this.isOpen = false;
+          this.setResult(this.search);
+        }
+      });
     },
     handleClickOutside(evt) {
       if (!this.$el.contains(evt.target)) {
         this.isOpen = false;
-        this.arrowCounter = -1;
       }
     },
     clearSearch() {
@@ -102,7 +101,8 @@ export default {
         this.results = val;
         this.isLoading = false;
       }
-    }
+    },
+    search() {}
   },
   mounted() {
     document.addEventListener('click', this.handleClickOutside);

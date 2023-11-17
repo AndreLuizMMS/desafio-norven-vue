@@ -11,11 +11,6 @@ export default {
   props: ['pokemons'],
   components: {
     PokemonCard
-  },
-  data() {
-    return {
-      pages: 1
-    };
   }
 };
 </script>
